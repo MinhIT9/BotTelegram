@@ -74,7 +74,7 @@ app = ApplicationBuilder().token(TOKEN_BOT).build()
 # Thêm một MessageHandler để xử lý tất cả tin nhắn văn bản gửi đến bot
 # app.add_handler(MessageHandler(filters.TEXT | filters.PHOTO | filters.VIDEO & ~filters.COMMAND, forward_to_channels))
 
-app.add_handler(MessageHandler(filters.ALL, handle_message))
+app.add_handler(MessageHandler(filters.ALL & ~filters.COMMAND, handle_message))
 
 # Bắt đầu bot
 app.run_polling()
