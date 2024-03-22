@@ -11,35 +11,42 @@ CHANNELS = {
 }
 
 async def forward_to_channels(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    user_message = update.message.text
+    # Kiểm tra xem có tin nhắn để xử lý không
+    if update.message is None:
+        return  # Không có tin nhắn để xử lý, thoát khỏi hàm
 
-    # Tìm kiếm kí hiệu đánh dấu và số theo sau trong tin nhắn
-    matches = re.findall(r'#(\d+)', user_message)
-    target_channels = []
-    for match in matches:
-        for digit in match:
-            channel_id = CHANNELS.get(digit)
-            if channel_id and channel_id not in target_channels:
-                target_channels.append(channel_id)
+    # Khởi tạo biến để lưu trữ nội dung tin nhắn hoặc chú thích (caption)
+    content = update.message.text or update.message.caption
+
+    # Tìm kiếm kí hiệu đánh dấu và số theo sau trong nội dung
+    matches = re.findall(r'#(\d+)', content if content else '')
+    target_channels = [CHANNELS.get(digit) for match in matches for digit in match if CHANNELS.get(digit)]
 
     # Gửi tin nhắn đến các channel tương ứng
     for channel_id in target_channels:
         if update.message.text:
-            # Loại bỏ kí hiệu đánh dấu khỏi tin nhắn trước khi gửi
-            message_to_send = re.sub(r'#\d+', '', user_message).strip()
+            # Nếu có nội dung văn bản, gửi như tin nhắn văn bản
+            message_to_send = re.sub(r'#\d+', '', content).strip()
             await context.bot.send_message(chat_id=channel_id, text=message_to_send)
         elif update.message.photo:
-            photo = update.message.photo[-1]
-            await context.bot.send_photo(chat_id=channel_id, photo=photo.file_id, caption=update.message.caption)
+            # Nếu là hình ảnh, gửi kèm chú thích (nếu có)
+            photo = update.message.photo[-1].file_id
+            caption = re.sub(r'#\d+', '', content).strip() if content else None
+            await context.bot.send_photo(chat_id=channel_id, photo=photo, caption=caption)
         elif update.message.video:
-            await context.bot.send_video(chat_id=channel_id, video=update.message.video.file_id, caption=update.message.caption)
+            # Nếu là video, gửi kèm chú thích (nếu có)
+            video = update.message.video.file_id
+            caption = re.sub(r'#\d+', '', content).strip() if content else None
+            await context.bot.send_video(chat_id=channel_id, video=video, caption=caption)
+        # Thêm xử lý cho các loại tin nhắn khác nếu cần
+
 
 
 # Tạo một ứng dụng bot với token của bạn.
 app = ApplicationBuilder().token(TOKEN_BOT).build()
 
 # Thêm một MessageHandler để xử lý tất cả tin nhắn văn bản gửi đến bot
-app.add_handler(MessageHandler(filters.ALL &~filters.COMMAND, forward_to_channels))
+app.add_handler(MessageHandler(filters.TEXT | filters.PHOTO | filters.VIDEO & ~filters.COMMAND, forward_to_channels))
 
 # Bắt đầu bot
 app.run_polling()
