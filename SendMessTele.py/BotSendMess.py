@@ -1,10 +1,9 @@
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
-from controller import set_channel, show_channels
-from config import TOKEN_BOT, commands_list
-from Message import handle_message
+from module import set_channel, show_channels, handle_message
+from config import TOKEN_BOT, commands_list, update_channels, main
 
-#Show ALL lệnh hiện tại BOT đang có
+#Show ALL Command hiện tại BOT đang có
 async def admin(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message = "Danh sách các lệnh của bot:\n\n"
     for command, description in commands_list:
