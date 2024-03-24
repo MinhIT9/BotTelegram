@@ -1,19 +1,18 @@
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, MessageHandler, filters
+from telegram.ext import ContextTypes
 import re
+from config import CHANNELS, message_id_mapping, update_channels
 
-TOKEN_BOT = '6500285460:AAEm_dyWXxszfm0T3DJmMFrRV4Ez6M8jQcg'
-CHANNELS = {
-    '1': '@Chan223a',
-    '2': '@chanws1',
-    '3': '@chan9090s',
-    '4': '-1002133340256'
-}
 
-message_id_mapping = {}  # { chat_id: { original_message_id: forwarded_message_id }} 
 
+# Fucntion này có chức năng đăng bài trên BOT lên các Channel khác
+# Có chức năng chỉnh sửa
+# Chưa có chức năng gửi ảnh video theo dạng albums
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    await update_channels()
+
     global message_id_mapping
+    print("Channels: ", CHANNELS)
     
     # Xử lý tin nhắn mới
     if update.message:
@@ -44,10 +43,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             if original_message_id not in message_id_mapping[chat_id]:
                 message_id_mapping[chat_id][original_message_id] = {}
             message_id_mapping[chat_id][original_message_id][channel_id] = sent_message.message_id
-    if update.message:
-        # Logic gửi tin nhắn mới như đã thảo luận trước đó.
         pass
-
+        print("message_id_mapping: ", message_id_mapping)
     # Xử lý tin nhắn chỉnh sửa
     elif update.edited_message:
         chat_id = update.edited_message.chat_id
@@ -66,15 +63,29 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 elif new_caption:
                     await context.bot.edit_message_caption(chat_id=channel_id, message_id=forwarded_message_id, caption=new_caption)
 
+#Set Channel
+async def set_channel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    args = context.args
+    if len(args) >= 2:
+        channel_number = args[0]
+        channel_id = ' '.join(args[1:])  # Cho phép ID kênh chứa dấu cách
+        CHANNELS[channel_number] = channel_id
+        await update.message.reply_text(f"Channel {channel_number} has been set to {channel_id}")
+    else:
+        await update.message.reply_text("Usage: /setchannel <number> <channel_id>")
+        
+#Show Channel
+async def show_channels(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    # Đảm bảo rằng CHANNELS đã được cập nhật.
+    # Chỉ cần gọi update_channels nếu CHANNELS là rỗng hoặc bạn muốn cập nhật lại nó.
+    await update_channels()
 
+    # Sau khi đảm bảo CHANNELS đã được cập nhật, hiển thị nó.
+    if CHANNELS:
+        message_text = "Current Channels:\n"
+        for number, channel_id in CHANNELS.items():
+            message_text += f"Number {number}: {channel_id}\n"
+        await update.message.reply_text(message_text)
+    else:
+        await update.message.reply_text("No channels to display or failed to update channels.")
 
-# Tạo một ứng dụng bot với token của bạn.
-app = ApplicationBuilder().token(TOKEN_BOT).build()
-
-# Thêm một MessageHandler để xử lý tất cả tin nhắn văn bản gửi đến bot
-# app.add_handler(MessageHandler(filters.TEXT | filters.PHOTO | filters.VIDEO & ~filters.COMMAND, forward_to_channels))
-
-app.add_handler(MessageHandler(filters.ALL & ~filters.COMMAND, handle_message))
-
-# Bắt đầu bot
-app.run_polling()
