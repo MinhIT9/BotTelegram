@@ -3,15 +3,15 @@ from aiohttp  import ClientSession
 import asyncio
 
 TOKEN_BOT = '6500285460:AAEm_dyWXxszfm0T3DJmMFrRV4Ez6M8jQcg'
-api_url = "https://6576fb06197926adf62cee4c.mockapi.io/api/channels"
+CHANNEL_API = "https://6576fb06197926adf62cee4c.mockapi.io/api/channels"
 CHANNELS = {}  # Khai báo CHANNELS ở đây
 
 #Get Channels
-async def fetch_channel_data(api_url):
+async def fetch_channel_data(CHANNEL_API):
     try:
         async with ClientSession() as session:
-            async with session.get(api_url) as response:
-                # print(f"Response Status: {response.status}")  # In trạng thái phản hồi
+            async with session.get(CHANNEL_API) as response:
+                print(f"Response Status: {response.status}")  # In trạng thái phản hồi
                 if response.status == 200:
                     channel_data = await response.json()
                     # print(f"Channel Data: {channel_data}")  # In dữ liệu kênh
@@ -22,9 +22,10 @@ async def fetch_channel_data(api_url):
         print(f"Error: {e}")  # In lỗi
         return None, str(e)
     
+# Show Channel
 async def update_channels():
     global CHANNELS  # Sử dụng biến toàn cục CHANNELS
-    channel_data, error = await fetch_channel_data(api_url)
+    channel_data, error = await fetch_channel_data(CHANNEL_API)
     if channel_data:
         CHANNELS.clear()
         for channel in channel_data:

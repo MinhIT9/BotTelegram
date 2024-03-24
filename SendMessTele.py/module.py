@@ -1,7 +1,7 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 import re
-from config import CHANNELS, message_id_mapping, fetch_channel_data, update_channels, api_url
+from config import CHANNELS, message_id_mapping, update_channels
 
 
 
@@ -63,7 +63,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 elif new_caption:
                     await context.bot.edit_message_caption(chat_id=channel_id, message_id=forwarded_message_id, caption=new_caption)
 
-#set Channel
+#Set Channel
 async def set_channel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     args = context.args
     if len(args) >= 2:
@@ -73,7 +73,8 @@ async def set_channel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         await update.message.reply_text(f"Channel {channel_number} has been set to {channel_id}")
     else:
         await update.message.reply_text("Usage: /setchannel <number> <channel_id>")
-
+        
+#Show Channel
 async def show_channels(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     # Đảm bảo rằng CHANNELS đã được cập nhật.
     # Chỉ cần gọi update_channels nếu CHANNELS là rỗng hoặc bạn muốn cập nhật lại nó.
