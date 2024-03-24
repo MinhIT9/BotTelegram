@@ -1,6 +1,6 @@
 # bot_config.py
-from API import fetch_channel_data, fetch_message_id_mapping
-import asyncio
+from API import fetch_channel_data, fetch_message_id_mapping, update_message_id_mapping_on_api
+import asyncio, json
 
 CHANNELS = {}
 message_id_mapping = {}
@@ -62,13 +62,3 @@ async def update_messageIdMapping():
         message_id_mapping.update(converted_data)
         print("Fetched message_id_mapping successfully.")
         # print(message_id_mapping)
-
-
-
-# async def main():
-#     await update_messageIdMapping()
-    
-    
-# if __name__ == '__main__':
-#     asyncio.run(main())
-# print(message_id_mapping)

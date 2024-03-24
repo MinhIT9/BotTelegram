@@ -1,6 +1,8 @@
-
+# API.py
 import aiohttp
+import json
 
+# Lấy dữ liệu Channels từ API
 async def fetch_channel_data(api_url):
     async with aiohttp.ClientSession() as session:
         async with session.get(api_url) as response:
@@ -9,7 +11,8 @@ async def fetch_channel_data(api_url):
                 return channel_data, None
             else:
                 return None, "Failed to fetch channel data."
-
+            
+# Lấy dữ liệu message_id_mapping từ API
 async def fetch_message_id_mapping(api_url):
     async with aiohttp.ClientSession() as session:
         async with session.get(api_url) as response:
@@ -24,3 +27,26 @@ async def fetch_message_id_mapping(api_url):
                     return None, "Data format is incorrect or message_id_mapping not found"
             else:
                 return None, "Failed to fetch message ID mapping"
+
+async def update_message_id_mapping_on_api(api_url, message_id_mapping_id, message_id_mapping_data):
+    # Xây dựng URL bằng cách thêm ID vào API URL
+    url_with_id = f"{api_url}/{message_id_mapping_id}"
+    async with aiohttp.ClientSession() as session:
+        # Chuyển dữ liệu message_id_mapping thành JSON
+        data = json.dumps({"message_id_mapping": message_id_mapping_data})
+        print("data to API: ", data)
+        headers = {'Content-Type': 'application/json'}
+        async with session.put(url_with_id, data=data, headers=headers) as response:
+            
+            # In ra mã trạng thái và nội dung phản hồi từ API
+            print(f"Status Code: {response.status}")
+            response_text = await response.text()  # Lấy nội dung phản hồi dưới dạng text
+            print(f"Response from API: {response_text}")
+
+            if response.status == 200:
+                print("message_id_mapping successfully updated on API")
+                # Đảm bảo việc sử dụng response.json() ở đây
+                return await response.json()  # Giả định API trả về JSON
+            else:
+                print("Failed to update message_id_mapping on API")
+                return None
