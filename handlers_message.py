@@ -74,12 +74,3 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                     new_caption = clean_content(new_caption)  # Làm sạch caption mới
                     await context.bot.edit_message_caption(chat_id=channel_id, message_id=forwarded_message_id, caption=new_caption)
         # print( "message_id_mapping HandlerMess: ",message_id_mapping)
-
-
-# async def main():
-#     await update_messageIdMapping()
-    
-    
-# if __name__ == '__main__':
-#     asyncio.run(main())
-# print(message_id_mapping)

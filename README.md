@@ -1,7 +1,7 @@
 requirements.txt: Danh sách các gói Python cần thiết để chạy ứng dụng. 
 Sử dụng lệnh **pip install -r requirements.txt** để cài đặt tất cả cùng một lúc.
 
-Phiên bản 2.0
+Phiên bản V2.0
 1. Chức năng hoàn thành
 - Gửi tin nhắn tới BOT, BOT tự động chuyển tin nhắn đến các Channel chỉ định qua dấu # ví dụ (#123)
     - Chỉ gửi được TEXT, PHOTO, VIDEO, caption kèm ảnh
@@ -16,7 +16,7 @@ Phiên bản 2.0
 - ADD, EDIT, REMOVE Channel
 - Tính năng LOG các hành động, lỗi, tạo 1 Channel riêng để nhận các LOG này
 ---------
-Phiên bản 2.1
+Phiên bản V2.1
 1. Thêm tính năng
 - SetChanne: 
     Cú pháp: /setChannel <numberID> <ChannelID>: 

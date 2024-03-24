@@ -1,0 +1,55 @@
+Bước 1: Tạo tài khoản Heroku
+Truy cập Heroku và đăng ký một tài khoản nếu bạn chưa có.
+
+Bước 2: Cài đặt Heroku CLI
+Tải và cài đặt Heroku CLI từ trang web chính thức của Heroku: Heroku CLI. Điều này cho phép bạn quản lý dự án Heroku của mình từ dòng lệnh.
+
+Bước 3: Đăng nhập vào Heroku từ Terminal/Command Prompt
+Mở terminal (Linux, macOS) hoặc Command Prompt/PowerShell (Windows) và chạy lệnh sau:
+        "heroku login"
+
+Bước 4: Chuẩn bị Dự Án của Bạn
+là một phần quan trọng trong quá trình chuẩn bị dự án Python của bạn để triển khai lên Heroku. Dưới đây là một hướng dẫn chi tiết hơn về các tệp bạn cần chuẩn bị:
+- Procfile là một tệp văn bản đơn giản, giúp Heroku biết cách chạy ứng dụng của bạn. Nó phải được đặt trong thư mục gốc của dự án và không có phần mở rộng tệp.
+    - Mở một trình soạn thảo văn bản và tạo một tệp mới.
+    - Định nghĩa loại quy trình và lệnh để chạy ứng dụng của bạn. Ví dụ, nếu bạn có một ứng dụng web sử dụng Flask và tệp chính là app.py, nội dung của Procfile sẽ như sau:
+        "web: python app.py"
+    - Lưu tệp với tên Procfile trong thư mục gốc của dự án.
+    - Lưu ý rằng từ web: chỉ định loại quy trình là một ứng dụng web, và python app.py là lệnh để chạy ứng dụng.
+- requirements.txt
+Tệp requirements.txt liệt kê tất cả các gói Python mà dự án của bạn phụ thuộc vào. Điều này giúp Heroku cài đặt chúng khi bạn triển khai ứng dụng.
+    - Đảm bảo bạn đã kích hoạt môi trường ảo (nếu bạn sử dụng) cho dự án của mình.
+    - Mở terminal hoặc command prompt.
+    - Điều hướng đến thư mục gốc của dự án của bạn.
+    - Chạy lệnh sau để tạo requirements.txt:
+            "pip freeze > requirements.txt"
+- runtime.txt (Tùy chọn)
+    - Tạo một tệp runtime.txt để chỉ định phiên bản Python mà ứng dụng của bạn yêu cầu. Điều này không bắt buộc nhưng được khuyến khích nếu ứng dụng của bạn cần một phiên bản Python cụ thể.
+    - Mở một trình soạn thảo văn bản và tạo một tệp mới.
+    - Ghi rõ phiên bản Python bạn muốn sử dụng. Ví dụ, nếu bạn muốn sử dụng Python 3.9.4, bạn sẽ nhập:
+        "Python-3.12.2"
+    - Lưu tệp với tên runtime.txt trong thư mục gốc của dự án.
+    - Lưu ý: Bạn có thể kiểm tra các phiên bản Python được hỗ trợ bởi Heroku bằng cách tham khảo tài liệu chính thức của họ.
+
+Bước 5: Khởi tạo Git (nếu bạn chưa làm)
+Nếu bạn chưa theo dõi dự án của mình trên Git, hãy thực hiện các bước sau trong thư mục gốc của dự án:
+        git init
+        git add .
+        git commit -m "initial commit"
+
+Bước 6: Tạo Ứng Dụng Heroku
+Tạo một ứng dụng mới trên Heroku bằng cách chạy:
+        heroku create
+Lệnh này sẽ tạo một ứng dụng trên Heroku và thêm một remote mới vào repository Git của bạn.
+
+Bước 7: Triển Khai Dự Án lên Heroku
+Đẩy dự án của bạn lên Heroku sử dụng Git:
+        git push heroku master
+
+Bước 8: Mở Ứng Dụng
+Sau khi triển khai, bạn có thể mở ứng dụng trên trình duyệt:
+        heroku open
+
+Bước 9: Kiểm tra Logs (Nếu Cần)
+Nếu bạn gặp bất kỳ vấn đề nào trong quá trình triển khai, bạn có thể xem logs để tìm ra nguyên nhân:
+        heroku logs --tail

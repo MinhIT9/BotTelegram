@@ -1,0 +1,7 @@
+# async def main():
+#     await update_messageIdMapping()
+    
+    
+# if __name__ == '__main__':
+#     asyncio.run(main())
+# print(message_id_mapping)
