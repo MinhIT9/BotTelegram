@@ -36,5 +36,5 @@ Phiên Bản V2.1.1
 Phiên bản V2.2
 - Thêm tính năng cho lệnh setChannel, showChannel
     setChannel sẽ tự động lấy luôn tên channel và lưu vào API
-    showChannel sẽ hiển thị thêm Tên Channel
+    showChannel sẽ hiển thị thêm Tên Channel (OK)
 ---------
