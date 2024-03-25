@@ -1,6 +1,7 @@
 requirements.txt: Danh sách các gói Python cần thiết để chạy ứng dụng. 
 Sử dụng lệnh **pip install -r requirements.txt** để cài đặt tất cả cùng một lúc.
-
+lấy gói "pip freeze"
+---------
 Phiên bản V2.0
 1. Chức năng hoàn thành
 - Gửi tin nhắn tới BOT, BOT tự động chuyển tin nhắn đến các Channel chỉ định qua dấu # ví dụ (#123)
@@ -28,3 +29,6 @@ Phiên bản V2.1
 - EDIT ảnh đã gửi trước đó
 - REMOVE Channel
 - Tính năng LOG các hành động, lỗi, tạo 1 Channel riêng để nhận các LOG này
+---------
+Phiên Bản V2.1.1
+- Cập nhật certifi SSL cho API 
