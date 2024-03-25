@@ -25,8 +25,9 @@ async def update_channels():
         for channel in channel_data:
             number = channel.get('channel_number')
             channel_id = channel.get('channel_id')
+            channel_name = channel.get('channel_name', 'No Name')  # Lấy tên kênh, nếu không có thì dùng 'No Name'
             if number and channel_id:
-                CHANNELS[number] = channel_id
+                 CHANNELS[number] = {'id': channel_id, 'name': channel_name}
 
 # Hàm Chuyển Đổi từ chuỗi sang số nguyên
 def convert_keys_to_int(mapping):

@@ -28,5 +28,20 @@
     "channel_number": "6",
     "channel_id": "-1001953795613",
     "id": "6"
+  },
+  {
+    "channel_number": "7",
+    "channel_id": "@Chan223a",
+    "id": "7"
+  },
+  {
+    "channel_number": "8",
+    "channel_id": "@chanws1",
+    "id": "8"
+  },
+  {
+    "channel_number": "9",
+    "channel_id": "@chan9090s",
+    "id": "9"
   }
 ]

@@ -32,3 +32,8 @@ Phiên bản V2.1
 ---------
 Phiên Bản V2.1.1
 - Cập nhật certifi SSL cho API 
+---------
+Phiên bản V2.2
+- Thêm tính năng cho lệnh setChannel, showChannel
+    setChannel sẽ tự động lấy luôn tên channel và lưu vào API
+    showChannel sẽ hiển thị thêm Tên Channel

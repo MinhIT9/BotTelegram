@@ -65,7 +65,7 @@ async def update_message_id_mapping_on_api(api_url, message_id_mapping_id, messa
         return None, f"An error occurred: {str(e)}"
 
 #  xử lý việc cập nhật hoặc thêm mới channel - START
-async def set_or_update_channel(api_url, channel_number, channel_id):
+async def set_or_update_channel(api_url, channel_number, channel_id, channel_name):
     global session
     if session is None:
         session = await get_client_session()
@@ -78,9 +78,9 @@ async def set_or_update_channel(api_url, channel_number, channel_id):
         existing_channel = next((item for item in channel_data if item['channel_number'] == channel_number), None)
         
         if existing_channel:
-            return await update_channel(api_url, existing_channel['id'], {'channel_number': channel_number, 'channel_id': channel_id})
+            return await update_channel(api_url, existing_channel['id'], {'channel_number': channel_number, 'channel_id': channel_id, 'channel_name': channel_name})
         else:
-            return await add_new_channel(api_url, {'channel_number': channel_number, 'channel_id': channel_id})
+            return await add_new_channel(api_url, {'channel_number': channel_number, 'channel_id': channel_id, 'channel_name': channel_name})
     except aiohttp.ClientError as e:
         return None, f"An error occurred: {str(e)}"
     
