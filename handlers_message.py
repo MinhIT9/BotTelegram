@@ -2,7 +2,7 @@
 import re, asyncio
 from telegram import Update
 from telegram.ext import ContextTypes
-from bot_config import CHANNELS, MESSAGE_ID_MAPPING_API, message_id_mapping, update_channels, update_messageIdMapping
+from bot_config import CHANNELS, MESSAGE_ID_MAPPING_API, message_id_mapping, update_channels, update_messageIdMapping, MESSAGE_ID_MAPPING_API_ID
 from API import update_message_id_mapping_on_api
 
 #Hàm Xử Lý Nội Dung Tin Nhắn
@@ -33,15 +33,15 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             sent_message = None
             if update.message.text:
                 message_to_send = clean_content(content)
-                sent_message = await context.bot.send_message(chat_id=channel_id, text=message_to_send)
+                sent_message = await context.bot.send_message(chat_id=channel_id, text=message_to_send )
             elif update.message.photo:
                 photo = update.message.photo[-1].file_id
                 caption = clean_content(content) if content else None
-                sent_message = await context.bot.send_photo(chat_id=channel_id, photo=photo, caption=caption)
+                sent_message = await context.bot.send_photo(chat_id=channel_id, photo=photo, caption=caption )
             elif update.message.video:
                 video = update.message.video.file_id
                 caption = clean_content(content) if content else None
-                sent_message = await context.bot.send_video(chat_id=channel_id, video=video, caption=caption)
+                sent_message = await context.bot.send_video(chat_id=channel_id, video=video, caption=caption )
 
             if sent_message:  # Chỉ cập nhật nếu có tin nhắn được gửi
                 if chat_id not in message_id_mapping:
@@ -51,7 +51,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 message_id_mapping[chat_id][original_message_id][channel_id] = sent_message.message_id
 
         #Kích Hoạt Cập Nhật Tự Động sau Mỗi Tin Nhắn Được Gửi
-        await update_message_id_mapping_on_api(MESSAGE_ID_MAPPING_API, "1", message_id_mapping)
+        await update_message_id_mapping_on_api(MESSAGE_ID_MAPPING_API, MESSAGE_ID_MAPPING_API_ID, message_id_mapping)
         # print("message_id_mapping Scusses: ", message_id_mapping)
         
     # Xử lý tin nhắn chỉnh sửa
@@ -68,9 +68,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 # Nếu tin nhắn chỉnh sửa có văn bản, cập nhật văn bản của tin nhắn
                 if new_text:
                     new_text = clean_content(new_text)  # Làm sạch văn bản mới
-                    await context.bot.edit_message_text(chat_id=channel_id, message_id=forwarded_message_id, text=new_text)
+                    await context.bot.edit_message_text(chat_id=channel_id, message_id=forwarded_message_id, text=new_text )
                 # Nếu tin nhắn chỉnh sửa có caption, và đây là hình ảnh hoặc video, cập nhật caption
                 elif new_caption:
                     new_caption = clean_content(new_caption)  # Làm sạch caption mới
-                    await context.bot.edit_message_caption(chat_id=channel_id, message_id=forwarded_message_id, caption=new_caption)
+                    await context.bot.edit_message_caption(chat_id=channel_id, message_id=forwarded_message_id, caption=new_caption )
         # print( "message_id_mapping HandlerMess: ",message_id_mapping)

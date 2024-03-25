@@ -11,9 +11,10 @@ commands_list = [
     ("/showChannel", "Hiển thị danh sách các kênh hiện tại.")
 ]
 
-TOKEN_BOT = '6500285460:AAEm_dyWXxszfm0T3DJmMFrRV4Ez6M8jQcg'
+TOKEN_BOT = '6150825081:AAGSEEy3K61hvwPKvCXhYRjJ7fWd5_4ZXa0'
 CHANNEL_API = "https://6576fb06197926adf62cee4c.mockapi.io/api/channels"
 MESSAGE_ID_MAPPING_API = "https://6576fb06197926adf62cee4c.mockapi.io/api/messageIdMapping"
+MESSAGE_ID_MAPPING_API_ID = "2"
 
 # Cập nhật CHANNELS
 async def update_channels():
