@@ -31,7 +31,7 @@ Phiên bản V2.1
 - Tính năng LOG các hành động, lỗi, tạo 1 Channel riêng để nhận các LOG này
 ---------
 Phiên Bản V2.1.1
-- Cập nhật certifi SSL cho API 
+- Cập nhật certifi SSL cho API ok
 ---------
 Phiên bản V2.2
 - Thêm tính năng cho lệnh setChannel, showChannel
