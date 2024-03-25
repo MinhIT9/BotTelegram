@@ -39,3 +39,4 @@ Phiên bản V2.2
     showChannel sẽ hiển thị thêm Tên Channel
 ---------
 Chuẩn bị V2.3
+OK nhé
