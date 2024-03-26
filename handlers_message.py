@@ -15,8 +15,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await update_channels()
     await update_messageIdMapping()
     
-    print("CHANNELS: ", CHANNELS)
-    print("MessageIDmapping: ", message_id_mapping)
+    # print("CHANNELS: ", CHANNELS)
+    # print("MessageIDmapping: ", message_id_mapping)
 
     if update.message:
         chat_id = update.message.chat_id
@@ -40,7 +40,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 sent_message = None
                 if update.message.text:
                     message_to_send = clean_content(content)
-                    sent_message = await context.bot.send_message(chat_id=channel_id, text=message_to_send)
+                    sent_message = await context.bot.send_message(chat_id=channel_id, text=message_to_send, parse_mode='Markdown')
+                    print("sent_message: ", sent_message)
                 elif update.message.photo:
                     photo = update.message.photo[-1].file_id
                     caption = clean_content(content) if content else None
