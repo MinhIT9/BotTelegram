@@ -1,24 +1,27 @@
 # bot_config.py
+import asyncio, json, os
+from dotenv  import load_dotenv
 from API import fetch_channel_data, fetch_message_id_mapping, update_message_id_mapping_on_api
-import asyncio, json
+from telegram import Bot
 
+load_dotenv("env.env")
+
+# Lấy giá trị biến môi trường
+TOKEN_BOT = os.getenv('TOKEN_BOT')  # Lấy từ biến môi trường
+CHANNEL_API = os.getenv('CHANNEL_API')  # Lấy từ biến môi trường
+MESSAGE_ID_MAPPING_API = os.getenv('MESSAGE_ID_MAPPING_API')  # Lấy từ biến môi trường
+MESSAGE_ID_MAPPING_API_ID = os.getenv('MESSAGE_ID_MAPPING_API_ID')  # Sử dụng ID phù hợp với môi trường của bạn
+
+bot = Bot(token=TOKEN_BOT)
 CHANNELS = {}
 message_id_mapping = {}
 
+#ADMIN
 commands_list = [
     ("/admin", "Hiển thị danh sách các lệnh hiện có của bot."),
     ("/setChannel", "Thiết lập hoặc thay đổi ID kênh."),
     ("/showChannel", "Hiển thị danh sách các kênh hiện tại.")
 ]
-
-# TOKEN_BOT = '6150825081:AAGSEEy3K61hvwPKvCXhYRjJ7fWd5_4ZXa0' #TuTienGIoi
-TOKEN_BOT = '6150825081:AAGSEEy3K61hvwPKvCXhYRjJ7fWd5_4ZXa0' #DEV
-
-CHANNEL_API = "https://6576fb06197926adf62cee4c.mockapi.io/channels" #TuTienGIoi
-# CHANNEL_API = "https://6601e3599d7276a755525496.mockapi.io/channels" #DEV
-
-MESSAGE_ID_MAPPING_API = "https://6576fb06197926adf62cee4c.mockapi.io/messageIdMapping"
-MESSAGE_ID_MAPPING_API_ID = "2" #1TuTienGioi #2DEV
 
 # Cập nhật CHANNELS
 async def update_channels():
@@ -29,8 +32,10 @@ async def update_channels():
         for channel in channel_data:
             number = channel.get('channel_number')
             channel_id = channel.get('channel_id')
-            if number and channel_id:
-                CHANNELS[number] = channel_id
+            channel_name = channel.get('channel_name')  # Lấy channel_name từ dữ liệu
+            if number and channel_id and channel_name:
+                CHANNELS[number] = {'id': channel_id, 'name': channel_name}
+
 
 # Hàm Chuyển Đổi từ chuỗi sang số nguyên
 def convert_keys_to_int(mapping):
@@ -48,13 +53,15 @@ def convert_keys_to_int(mapping):
 
 # Cập nhật message_id_mapping
 async def update_messageIdMapping():
-    data_messIdMapping, error = await fetch_message_id_mapping(MESSAGE_ID_MAPPING_API)
+    # Sử dụng MESSAGE_ID_MAPPING_API_ID khi gọi hàm fetch_message_id_mapping
+    data_messIdMapping, error = await fetch_message_id_mapping(MESSAGE_ID_MAPPING_API, MESSAGE_ID_MAPPING_API_ID)
     if error:
         print(f"Error: {error}")
     else:
-        # message_id_mapping.clear()
+        # Không cần lọc, vì data_messIdMapping đã trực tiếp là dữ liệu bạn muốn
+        message_id_mapping_data = data_messIdMapping.get("message_id_mapping", {})
         # Sử dụng hàm chuyển đổi ở đây
-        converted_data = convert_keys_to_int(data_messIdMapping)
+        converted_data = convert_keys_to_int(message_id_mapping_data)
         message_id_mapping.update(converted_data)
-        print("Fetched message_id_mapping successfully.")
-        print(converted_data)
+        print("Fetched and updated message_id_mapping successfully with id:", MESSAGE_ID_MAPPING_API_ID)
+

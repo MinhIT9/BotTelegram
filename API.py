@@ -23,10 +23,11 @@ async def fetch_channel_data(api_url):
     return await make_request("get", api_url)
             
 # Lấy dữ liệu message_id_mapping từ API
-async def fetch_message_id_mapping(api_url):
-    result, error = await make_request("get", api_url)
-    if result and isinstance(result, list) and 'message_id_mapping' in result[0]:
-        return result[0]['message_id_mapping'], None
+async def fetch_message_id_mapping(api_url, mapping_id):
+    url_with_id = f"{api_url}/{mapping_id}"
+    result, error = await make_request("get", url_with_id)
+    if result:
+        return result, None
     else:
         return None, "Data format is incorrect or message_id_mapping not found" if not error else error
 
