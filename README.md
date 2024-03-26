@@ -11,24 +11,12 @@ Phiên bản V2.0
     - Chỉ EDIT được CAPTION của PHOTO và VIDEO
 - Lấy danh sách channel từ API và hiển thị khi sử dụng lệnh /showChannel
 - Cập nhật message_id_mapping khi SEND, EDIT tin nhắn tới BOT 
-2. Chức năng cần thêm
-- Gửi tin nhắn tới channel theo dạng ALBUMS
-- EDIT ảnh đã gửi trước đó
-- ADD, EDIT, REMOVE Channel
-- Tính năng LOG các hành động, lỗi, tạo 1 Channel riêng để nhận các LOG này
 ---------
-Phiên bản V2.1
-1. Thêm tính năng
+Phiên bản V2.1 - Thêm tính năng
 - SetChanne: 
     Cú pháp: /setChannel <numberID> <ChannelID>: 
     Nếu đã tổn tại NumberID thì thay đôi ChannelID
     Nếu chưa tồn tại NumberID thì thêm mới 1 ChannelID khác
-    
-2. Tính năng cần thêm
-- Gửi tin nhắn tới channel theo dạng ALBUMS
-- EDIT ảnh đã gửi trước đó
-- REMOVE Channel
-- Tính năng LOG các hành động, lỗi, tạo 1 Channel riêng để nhận các LOG này
 ---------
 Phiên Bản V2.1.1
 - Cập nhật certifi SSL cho API ok
@@ -38,6 +26,16 @@ Phiên bản V2.2
     setChannel sẽ tự động lấy luôn tên channel và lưu vào API
     showChannel sẽ hiển thị thêm Tên Channel
 ---------
-Chuẩn bị V2.3
-OK nhé
+Phiên bản V2.3
+- Rút gọn các hàm bên trong file API.py
 ---------
+
+
+
+
+---------
+* Tính Năng Trong Tương Lai *
+- Gửi tin nhắn tới channel theo dạng ALBUMS
+- EDIT ảnh đã gửi trước đó
+- REMOVE Channel
+- Tính năng LOG các hành động, lỗi, tạo 1 Channel riêng để nhận các LOG này
