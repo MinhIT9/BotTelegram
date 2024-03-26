@@ -11,10 +11,14 @@ commands_list = [
     ("/showChannel", "Hiển thị danh sách các kênh hiện tại.")
 ]
 
-TOKEN_BOT = '6150825081:AAGSEEy3K61hvwPKvCXhYRjJ7fWd5_4ZXa0'
-CHANNEL_API = "https://6576fb06197926adf62cee4c.mockapi.io/api/channels"
-MESSAGE_ID_MAPPING_API = "https://6576fb06197926adf62cee4c.mockapi.io/api/messageIdMapping"
-MESSAGE_ID_MAPPING_API_ID = "2"
+# TOKEN_BOT = '6150825081:AAGSEEy3K61hvwPKvCXhYRjJ7fWd5_4ZXa0' #TuTienGIoi
+TOKEN_BOT = '6150825081:AAGSEEy3K61hvwPKvCXhYRjJ7fWd5_4ZXa0' #DEV
+
+CHANNEL_API = "https://6576fb06197926adf62cee4c.mockapi.io/channels" #TuTienGIoi
+# CHANNEL_API = "https://6601e3599d7276a755525496.mockapi.io/channels" #DEV
+
+MESSAGE_ID_MAPPING_API = "https://6576fb06197926adf62cee4c.mockapi.io/messageIdMapping"
+MESSAGE_ID_MAPPING_API_ID = "2" #1TuTienGioi #2DEV
 
 # Cập nhật CHANNELS
 async def update_channels():
@@ -53,4 +57,4 @@ async def update_messageIdMapping():
         converted_data = convert_keys_to_int(data_messIdMapping)
         message_id_mapping.update(converted_data)
         print("Fetched message_id_mapping successfully.")
-        # print(message_id_mapping)
+        print(converted_data)
