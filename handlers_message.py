@@ -18,6 +18,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     # print("CHANNELS: ", CHANNELS)
     # print("MessageIDmapping: ", message_id_mapping)
 
+    # Xử lý tin nhắn gửi đi
     if update.message:
         chat_id = update.message.chat_id
         original_message_id = update.message.message_id
@@ -37,22 +38,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             print("Sending message to Channel ID: ", channel_id)
 
             try:
-                sent_message = None
-                if update.message.text:
-                    message_to_send = clean_content(content)
-                    sent_message = await context.bot.send_message(chat_id=channel_id, text=message_to_send, parse_mode='Markdown')
-                    print("sent_message: ", sent_message)
-                elif update.message.photo:
-                    photo = update.message.photo[-1].file_id
-                    caption = clean_content(content) if content else None
-                    sent_message = await context.bot.send_photo(chat_id=channel_id, photo=photo, caption=caption)
-                elif update.message.video:
-                    video = update.message.video.file_id
-                    caption = clean_content(content) if content else None
-                    sent_message = await context.bot.send_video(chat_id=channel_id, video=video, caption=caption)
+                # Sử dụng copy_message để sao chép tin nhắn gốc sang channel mục tiêu
+                sent_message = await context.bot.copy_message(
+                    chat_id=channel_id,
+                    from_chat_id=chat_id,
+                    message_id=original_message_id
+                )
+                print("sent_message: ", sent_message)
 
+                # Cập nhật mapping cho tin nhắn được gửi thành công
                 if sent_message:
-                    # Cập nhật mapping cho tin nhắn được gửi thành công
                     message_id_mapping.setdefault(chat_id, {}).setdefault(original_message_id, {})[channel_id] = sent_message.message_id
 
             except TelegramError as e:
