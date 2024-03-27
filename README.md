@@ -52,3 +52,4 @@ Version V2.4:
 Version 2.5
 - Fix lỗi: gửi tin nhắn có định dạng B U I Hyperlink
 - Lấy dữ liệu CHANNELS lần đầu khi khởi động BOT
+- Cải thiện tốt độ load tin nhắn và gửi tin nhắn đến channel

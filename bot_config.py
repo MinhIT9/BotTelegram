@@ -25,7 +25,6 @@ commands_list = [
 
 # Cập nhật CHANNELS
 async def update_channels():
-    global CHANNELS
     channel_data, error = await fetch_channel_data(CHANNEL_API)
     if channel_data:
         CHANNELS.clear()
@@ -63,5 +62,5 @@ async def update_messageIdMapping():
         # Sử dụng hàm chuyển đổi ở đây
         converted_data = convert_keys_to_int(message_id_mapping_data)
         message_id_mapping.update(converted_data)
-        print("Fetched and updated message_id_mapping successfully with id:", MESSAGE_ID_MAPPING_API_ID)
+        print("Fetched and updated message_id_mapping successfully")
 
