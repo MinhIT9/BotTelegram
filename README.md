@@ -1,6 +1,6 @@
 requirements.txt: Danh sách các gói Python cần thiết để chạy ứng dụng. 
 Sử dụng lệnh **pip install -r requirements.txt** để cài đặt tất cả cùng một lúc.
-lấy gói "pip freeze"
+lấy gói "pip freeze > requirements.txt"
 ---------
 Tính năng Đang Có:
 1. Gửi tin nhắn tới BOT - tự động chuyển tin nhắn đến các Channel do BOT quản lý
