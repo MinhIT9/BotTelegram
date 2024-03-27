@@ -37,6 +37,14 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         original_message_id = update.edited_message.message_id
         new_text = update.edited_message.text
         new_caption = update.edited_message.caption
+        
+         # Nếu tin nhắn được chỉnh sửa
+        edited_text = update.edited_message.text or update.edited_message.caption
+        if edited_text.endswith('/rm'):
+            # Xác định và xoá tin nhắn gốc nếu nó được chỉnh sửa để thêm "/del" vào cuối
+            await delete_message_in_channels(update.edited_message.chat_id, update.edited_message.message_id, context)
+            # Xoá tin nhắn gốc trên Telegram
+            await context.bot.delete_message(chat_id=update.edited_message.chat_id, message_id=update.edited_message.message_id)
 
         # Kiểm tra và thực thi tác vụ chỉnh sửa tin nhắn trên các kênh
         if chat_id in message_id_mapping and original_message_id in message_id_mapping[chat_id]:
@@ -81,3 +89,18 @@ async def edit_message_in_channel(context, channel_id, forwarded_message_id, new
     except TelegramError as e:
         # Xử lý lỗi khi chỉnh sửa tin nhắn
         print(f"Error editing message in channel {channel_id}: {str(e)}")
+
+
+
+async def delete_message_in_channels(chat_id, message_id, context):
+    if chat_id in message_id_mapping and message_id in message_id_mapping[chat_id]:
+        for channel_id, forwarded_message_id in message_id_mapping[chat_id][message_id].items():
+            try:
+                await context.bot.delete_message(chat_id=channel_id, message_id=forwarded_message_id)
+                print(f"Deleted message {forwarded_message_id} in channel {channel_id}")
+            except TelegramError as e:
+                print(f"Error deleting message in channel {channel_id}: {str(e)}")
+        # Xoá mapping sau khi xoá tin nhắn
+        del message_id_mapping[chat_id][message_id]
+        # Đừng quên cập nhật message_id_mapping trên server/api nếu cần
+        await update_message_id_mapping_on_api(MESSAGE_ID_MAPPING_API, MESSAGE_ID_MAPPING_API_ID, message_id_mapping)
