@@ -7,18 +7,12 @@ from API import set_or_update_channel
         
 #Show Channel
 async def show_channels(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    await update_channels()
-
     # Sau khi đảm bảo CHANNELS đã được cập nhật, hiển thị nó.
     # Hiển thị cả ID và tên của kênh
-    if CHANNELS:
-        message_text = "Current Channels:\n"
-        for number, channel_info in CHANNELS.items():
-            message_text += f"NO. {number}: {channel_info['id']} - \"{channel_info['name']}\"\n"
-        await update.message.reply_text(message_text)
-        print("GET command showChannel Success!!")
-    else:
-        await update.message.reply_text("No channels to display or failed to update channels.")
+    message_text = "Current Channels:\n"
+    for number, channel_info in CHANNELS.items():
+        message_text += f"NO. {number}: {channel_info['id']} - \"{channel_info['name']}\"\n"
+    await update.message.reply_text(message_text)
         
 #Set Channel
 async def set_channel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -37,6 +31,8 @@ async def set_channel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
             if error:
                 await update.message.reply_text(f"Error updating channel: {error}")
             else:
+                # Cập nhật CHANNELS sau khi thêm/cập nhật channel mới thành công
+                await update_channels() 
                 await update.message.reply_text(f"Channel {channel_number} has been set/updated with ID {channel_id} and name \"{channel_name}\"")
         except Exception as e:
             await update.message.reply_text(f"Failed to fetch channel info or update channel: {str(e)}")
