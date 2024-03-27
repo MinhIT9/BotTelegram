@@ -13,6 +13,7 @@ def clean_content(content):
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     await update_messageIdMapping()
 
+    # Xử lý tin nhắn gửi đi
     if update.message:
         chat_id = update.message.chat_id
         original_message_id = update.message.message_id
