@@ -49,3 +49,5 @@ Version V2.4:
 - Tối ưu code
 - Thay đổi qua sử dụng biến môi trường
 ---------
+Version 2.5
+- Fix lỗi: gửi tin nhắn có định dạng B U I Hyperlink
