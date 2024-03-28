@@ -7,7 +7,7 @@ import asyncio
 
 async def startup():
     print("Đang khởi động bot và cập nhật CHANNELS...")
-    global CHANNELS, message_id_mapping
+    global CHANNELS, message_id_mapping, ADMINS
     await update_channels()  # Gọi hàm cập nhật CHANNELS
     await update_messageIdMapping() # Gọi hàm cập nhật message_id_mapping
     print("Khởi động thành công!")
