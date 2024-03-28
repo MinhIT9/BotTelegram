@@ -6,8 +6,8 @@ pyinstaller --onefile your_main_script.py
 ---------
 Tính năng Đang Có:
 1. Gửi tin nhắn tới BOT - tự động chuyển tin nhắn đến các Channel do BOT quản lý
-- Gửi được tin nhắn kèm 1 ảnh hoặc 1 video có caption
-- Có thể chỉnh sửa được tin nhắn đã gửi
+- Gửi được tin nhắn kèm 1 ảnh hoặc 1 video có caption = Giữ nguyên định dạng
+- Có thể chỉnh sửa được tin nhắn đã gửi (Lưu ý sẽ bị mất FORMAT)
 - ADD-EDIT-SHOW channels do BOT làm ADMIN
 
 
@@ -58,3 +58,4 @@ Version 2.5
 ---------
 Version 2.5.1 
 - Thêm chức năng xoá tin nhắn /rm ở cuối tin nhắn edit
+- Sử dụng tính năng copy_message cho tin nhắn gửi đến channel,ko dùng được trong edit

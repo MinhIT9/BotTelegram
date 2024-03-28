@@ -53,29 +53,20 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             await asyncio.gather(*edit_tasks)
 
 async def send_message_to_channel(context, chat_id, channel_info, content, update, original_message_id):
-    # Gửi tin nhắn đến kênh đích và cập nhật bản đồ ID tin nhắn
     channel_id = channel_info['id']
     try:
-        sent_message = None
-        # Gửi tin nhắn dựa trên loại nội dung: văn bản, ảnh hoặc video
-        if update.message.text:
-            message_to_send = clean_content(content)
-            sent_message = await context.bot.send_message(chat_id=channel_id, text=message_to_send, parse_mode='Markdown')
-        elif update.message.photo:
-            photo = update.message.photo[-1].file_id
-            caption = clean_content(content) if content else None
-            sent_message = await context.bot.send_photo(chat_id=channel_id, photo=photo, caption=caption)
-        elif update.message.video:
-            video = update.message.video.file_id
-            caption = clean_content(content) if content else None
-            sent_message = await context.bot.send_video(chat_id=channel_id, video=video, caption=caption)
-    
-        # Cập nhật bản đồ ID tin nhắn sau khi gửi thành công
-        if sent_message:
+        # Copy tin nhắn đến kênh đích dựa trên loại nội dung
+        if update.message.text or update.message.photo or update.message.video:
+            sent_message = await context.bot.copy_message(
+                chat_id=channel_id,
+                from_chat_id=chat_id,
+                message_id=original_message_id
+            )
+            
+            # Cập nhật bản đồ ID tin nhắn sau khi gửi thành công
             message_id_mapping.setdefault(chat_id, {}).setdefault(original_message_id, {})[channel_id] = sent_message.message_id
     except TelegramError as e:
-        # Xử lý lỗi khi gửi tin nhắn
-        print(f"Error sending message to channel {channel_id}: {str(e)}")
+        print(f"Error sending/copying message to channel {channel_id}: {str(e)}")
 
 async def edit_message_in_channel(context, channel_id, forwarded_message_id, new_text, new_caption, original_message_id):
     try:
