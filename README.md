@@ -2,7 +2,28 @@ requirements.txt: Danh sách các gói Python cần thiết để chạy ứng d
 Sử dụng lệnh **pip install -r requirements.txt** để cài đặt tất cả cùng một lúc.
 lấy gói "pip freeze > requirements.txt"
 pyinstaller --onefile your_main_script.py
+---------
+1. Tạo và Sử dụng Môi trường Ảo
+Tạo môi trường ảo: python -m venv env
+Kích hoạt môi trường ảo:
+- Windows: env\Scripts\activate
+- MacOS và Linux: source env/bin/activate
+2. Quản lý Phụ thuộc
+Cài đặt các thư viện: pip install numpy pandas flask
+Xuất danh sách phụ thuộc vào requirements.txt:
+    - pip freeze > requirements.txt : Xuất ALL
+    - pip install -r requirements.txt : Cài ALL
+Tắt mt ảo: deactivate
+3. Tạo Script tự động
+- Tạo một Batch Script trên Windows (run.bat):
+@echo off
+call env\Scripts\activate
+python app.py
 
+- Tạo một Shell Script trên macOS/Linux (run.sh):
+#!/bin/bash
+source env/bin/activate
+python app.py
 ---------
 Tính năng Đang Có:
 1. Gửi tin nhắn tới BOT - tự động chuyển tin nhắn đến các Channel do BOT quản lý
