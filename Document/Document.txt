@@ -53,3 +53,7 @@ Sau khi triển khai, bạn có thể mở ứng dụng trên trình duyệt:
 Bước 9: Kiểm tra Logs (Nếu Cần)
 Nếu bạn gặp bất kỳ vấn đề nào trong quá trình triển khai, bạn có thể xem logs để tìm ra nguyên nhân:
         heroku logs --tail
+
+
+
+-----------------
