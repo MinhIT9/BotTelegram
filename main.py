@@ -1,4 +1,4 @@
-from telegram.ext import CommandHandler, MessageHandler, filters, Application
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, Application
 from handlers_command import set_channel, show_channels, admin, start
 from handlers_message import handle_message
 from bot_config import TOKEN_BOT, update_channels, CHANNELS, update_messageIdMapping, message_id_mapping
