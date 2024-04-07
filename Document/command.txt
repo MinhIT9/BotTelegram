@@ -1,0 +1,22 @@
+------
+# mt venv
+Tạo Môi Trường Ảo:
+- Windows: python -m venv ten_moi_truong
+
+Kích Hoạt Môi Trường Ảo:
+- Windows: ten_moi_truong\Scripts\activate
+
+# mt virtualenv
+Create environment virtualenv
+pip install virtualenv
+
+Tạo Một Môi Trường Ảo
+virtualenv ten_moi_truong_ao
+
+# Kích Hoạt Môi Trường Ảo
+- Windows: .\ten_moi_truong_ao\Scripts\activate
+- macOS và Linux: source ten_moi_truong_ao/bin/activate
+
+# Vô Hiệu Hóa Môi Trường Ảo
+deactivate
+------
